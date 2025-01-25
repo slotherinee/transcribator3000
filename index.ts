@@ -25,6 +25,8 @@ bot.on('voice', async (msg) => {
     bot.sendMessage(chatId, 'Error downloading file');
     return;
   })
+  if (!downloadPath) return;
+  
   const transcription = await processVoiceMessage(downloadPath).catch(err => {
     bot.sendMessage(chatId, 'Error processing transcription');
     return;
