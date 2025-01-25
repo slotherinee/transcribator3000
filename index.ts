@@ -34,6 +34,7 @@ bot.on('voice', async (msg) => {
   bot.sendMessage(chatId, transcription, {
     reply_to_message_id: msg.message_id,
   });
+  await new Promise(r => setTimeout(r, 500))
   await deleteFile(downloadPath).catch(err => {
     bot.sendMessage(chatId, 'Error deleting file' + err);
     return;
