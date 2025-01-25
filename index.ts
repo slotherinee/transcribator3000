@@ -35,7 +35,7 @@ bot.on('voice', async (msg) => {
     reply_to_message_id: msg.message_id,
   });
   await deleteFile(downloadPath).catch(err => {
-    bot.sendMessage(chatId, 'Error deleting file');
+    bot.sendMessage(chatId, 'Error deleting file' + err);
     return;
   });
 })
@@ -71,5 +71,7 @@ async function processVoiceMessage (fileName: string) {
 
 async function deleteFile(filePath: string) {
   const file = Bun.file(filePath);
+  console.log('filepath', filePath)
+  console.log('file', file)
   await file.delete();
 }
