@@ -70,8 +70,5 @@ async function processVoiceMessage (fileName: string) {
 };
 
 async function deleteFile(filePath: string) {
-  const file = Bun.file(filePath);
-  console.log('filepath', filePath)
-  console.log('file', file)
-  await file.delete();
+  await Bun.file(filePath).delete()
 }
