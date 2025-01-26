@@ -71,5 +71,9 @@ async function processVoiceMessage (fileName: string) {
 };
 
 async function deleteFile(filePath: string) {
-  await Bun.file(filePath).delete()
+  const file = Bun.file(filePath)
+  const exists = await file.exists()
+  if (exists) {
+    await file.delete()
+  }
 }
