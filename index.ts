@@ -1,3 +1,4 @@
+import { rm } from 'fs/promises';
 import TelegramBot from 'node-telegram-bot-api';
 import { HfInference } from "@huggingface/inference";
 
@@ -34,7 +35,6 @@ bot.on('voice', async (msg) => {
   bot.sendMessage(chatId, transcription, {
     reply_to_message_id: msg.message_id,
   });
-  await new Promise(r => setTimeout(r, 500))
   await deleteFile(downloadPath).catch(err => {
     bot.sendMessage(chatId, 'Error deleting file' + err);
     return;
@@ -71,9 +71,9 @@ async function processVoiceMessage (fileName: string) {
 };
 
 async function deleteFile(filePath: string) {
-  const file = Bun.file(filePath)
-  const exists = await file.exists()
-  if (exists) {
-    await file.delete()
+  try {
+    await rm(filePath);
+  } catch (err) {
+    throw new Error(`Failed to delete file: ${err.message}`);
   }
 }
